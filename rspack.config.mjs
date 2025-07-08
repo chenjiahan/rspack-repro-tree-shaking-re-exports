@@ -1,6 +1,5 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isRunningWebpack = !!process.env.WEBPACK;
@@ -13,12 +12,12 @@ if (!isRunningRspack && !isRunningWebpack) {
  * @type {import('webpack').Configuration | import('@rspack/cli').Configuration}
  */
 const config = {
-  mode: "development",
+  mode: "production",
   devtool: false,
   entry: {
-    main: "./src/index",
+    normal: "./src/normal/a",
+    reExports: "./src/re-exports/a",
   },
-  plugins: [new HtmlWebpackPlugin()],
   output: {
     clean: true,
     path: isRunningWebpack
@@ -26,9 +25,9 @@ const config = {
       : path.resolve(__dirname, "rspack-dist"),
     filename: "[name].js",
   },
-  experiments: {
-    css: true,
-  },
+  optimization: {
+    splitChunks: false,
+  }
 };
 
 export default config;
